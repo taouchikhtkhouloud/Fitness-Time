@@ -126,7 +126,6 @@ public class CalendarFragment extends Fragment implements ButtonsInterface {
             adapter = new EventsAdapter(eventsDay, this);
             recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
             recyclerView.setAdapter(adapter);
-            //não sei porquê mas sem isto aqui não coloca a lista na recycler view
             adapter.setEvents(eventsDay);
 
 

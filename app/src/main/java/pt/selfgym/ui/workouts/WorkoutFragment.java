@@ -106,17 +106,7 @@ public class WorkoutFragment extends Fragment implements WorkoutsInterface, Butt
 
         });
 
-//        ArrayList<WorkoutDTO> workouts = new ArrayList<WorkoutDTO>();
-//        workouts.add(new WorkoutDTO("olá1", "hey", "full body"));
-//        workouts.add(new WorkoutDTO("olá2", "hey", "upper body"));
-//        workouts.add(new WorkoutDTO("olá3", "hey", "lower body"));
-//        workouts.add(new WorkoutDTO("olá4", "hey", "push"));
 //
-//        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.workouts);
-//        adapter = new ListAdapter(workouts, this);
-//        recyclerView.setNestedScrollingEnabled(false);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
-//        recyclerView.setAdapter(adapter);
 
         ImageButton addWorkoutButton = (ImageButton) view.findViewById(R.id.addWorkoutButton);
         addWorkoutButton.setOnClickListener(new View.OnClickListener() {
@@ -132,7 +122,7 @@ public class WorkoutFragment extends Fragment implements WorkoutsInterface, Butt
                 menuInflater.inflate(R.menu.menu_workouts, menu);
                 MenuItem menuItem = menu.findItem(R.id.searchbar);
                 MenuItem filterItem = menu.findItem(R.id.filtermenu);
-                MenuItem mqttItem = menu.findItem(R.id.mqttmenu);
+
                 SearchView searchView = (SearchView) menuItem.getActionView();
                 searchView.setQueryHint("Type here to search");
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -192,13 +182,7 @@ public class WorkoutFragment extends Fragment implements WorkoutsInterface, Butt
                         return false;
                     }
                 });
-                mqttItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(@NonNull MenuItem item) {
-                        mqttPopUp();
-                        return false;
-                    }
-                });
+
             }
 
             @Override
@@ -341,67 +325,8 @@ public class WorkoutFragment extends Fragment implements WorkoutsInterface, Butt
         dialog.show();
     }
 
-    public void mqttPopUp() {
-        dialogBuilder = new AlertDialog.Builder(activityInterface.getMainActivity());
-        final View mqttPopUp = getLayoutInflater().inflate(R.layout.mqtt_popup, null);
-        cancel = (Button) mqttPopUp.findViewById(R.id.cancelbuttonmqtt);
-        Switch switchmqtt = mqttPopUp.findViewById(R.id.switchmqtt);
-        if (mViewModel.checkStatemqtt()) {
-            switchmqtt.setChecked(true);
-        }
-        subscribe = (Button) mqttPopUp.findViewById(R.id.subscribebuttonmqtt);
-        unsubscribe = (Button) mqttPopUp.findViewById(R.id.unsubbuttonmqtt);
-        spinnermqttpopup = (Spinner) mqttPopUp.findViewById(R.id.spinnermqtt);
 
-        mViewModel.getTopics().observe(activityInterface.getMainActivity(), topics -> {
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(activityInterface.getMainActivity(), android.R.layout.simple_spinner_item, topics);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnermqttpopup.setAdapter(adapter);
-        });
-        dialogBuilder.setView(mqttPopUp);
-        dialog = dialogBuilder.create();
-        dialog.show();
 
-        switchmqtt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (switchmqtt.isChecked()) {
-                    mViewModel.connmqtt(activityInterface.getMainActivity());
-                } else {
-                    mViewModel.setTopics(new ArrayList<String>());
-                    mViewModel.disconmqtt();
-                }
-            }
-        });
-        subscribe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                subscribetopic = (EditText) mqttPopUp.findViewById(R.id.subscribemqtt);
-                if (subscribetopic.getText().toString().isBlank())
-                    Toast.makeText(activityInterface.getMainActivity(), "Write a topic", Toast.LENGTH_SHORT).show();
-                else if (mViewModel.subscribeToTopic(subscribetopic.getText().toString()))
-                    subscribetopic.setText("");
-                else
-                    Toast.makeText(activityInterface.getMainActivity(), "Already subscribed", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        unsubscribe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (spinnermqttpopup.getSelectedItem() != null)
-                    mViewModel.unsubscribeToTopic(spinnermqttpopup.getSelectedItem().toString());
-                else
-                    Toast.makeText(activityInterface.getMainActivity(), "Nothing to unsubscribe", Toast.LENGTH_SHORT).show();
-            }
-        });
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-    }
 
     public void createDeleteWorkoutPopUp() {
         dialogBuilder = new AlertDialog.Builder(activityInterface.getMainActivity());
@@ -465,9 +390,7 @@ public class WorkoutFragment extends Fragment implements WorkoutsInterface, Butt
                     for (WorkoutDTO wo : Objects.requireNonNull(mViewModel.getWorkouts().getValue())) {
                         if (wo.getId() == id) {
                             workoutDTO = wo;
-                            topics.forEach(topic -> {
-                                mViewModel.publishMessage(workoutDTO, topic);
-                            });
+
                             break;
                         }
                     }

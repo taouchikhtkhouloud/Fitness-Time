@@ -66,7 +66,10 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="X"
+        android:textColorHighlight="#6C1717"
+        android:textColorLink="#931B1B"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:rippleColor="#811313" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

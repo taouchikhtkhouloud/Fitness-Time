@@ -154,13 +154,13 @@ public class AddExerciseFragment extends Fragment implements ButtonsInterface {
                     }
 
                     View customView = tab.getCustomView();
-                    ((TextView) customView).setTextColor(Color.parseColor("#FA920F"));
+                    ((TextView) customView).setTextColor(Color.parseColor("#F13232"));
                 }
 
                 @Override
                 public void onTabUnselected(TabLayout.Tab tab) {
                     View customView = tab.getCustomView();
-                    ((TextView) customView).setTextColor(Color.parseColor("#9E9E9E"));
+                    ((TextView) customView).setTextColor(Color.parseColor("#F4F4F4"));
                 }
 
                 @Override

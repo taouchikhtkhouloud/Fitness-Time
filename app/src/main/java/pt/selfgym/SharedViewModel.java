@@ -37,7 +37,7 @@ import pt.selfgym.dtos.EventDTO;
 import pt.selfgym.dtos.ExerciseDTO;
 import pt.selfgym.dtos.ExerciseWODTO;
 import pt.selfgym.dtos.WorkoutDTO;
-import pt.selfgym.helpers.MQTTHelper;
+
 import pt.selfgym.mappers.Mapper;
 import pt.selfgym.services.AppExecutors;
 import pt.selfgym.ui.workouts.EditWorkoutFragment;
@@ -53,7 +53,7 @@ public class SharedViewModel extends AndroidViewModel {
     private final MutableLiveData<AtomicBoolean> getResultUpdate = new MutableLiveData<AtomicBoolean>();
     private final MutableLiveData<String> toastMessageObserver = new MutableLiveData<String>();
     private final MutableLiveData<List<String>> topics = new MutableLiveData<List<String>>();
-    private MQTTHelper mqttHelper;
+
 
     private final MutableLiveData<List<WorkoutDTO>> workoutsTop5 = new MutableLiveData<>();
     private final MutableLiveData<Dictionary<String, Integer>> stats = new MutableLiveData<>();
@@ -391,95 +391,12 @@ public class SharedViewModel extends AndroidViewModel {
 
     /**************************************************************************************************************************/
 
-    /**
-     * MQTT
-     **/
-    public boolean checkStatemqtt() {
-        if (mqttHelper != null)
-            return mqttHelper.mqttAndroidClient.isConnected();
-        return false;
-    }
 
-    public void connmqtt(ActivityInterface activityInterface) {
-        mqttHelper = new MQTTHelper(getApplication().getApplicationContext(), MqttClient.generateClientId());
 
-        mqttHelper.setCallback(new MqttCallbackExtended() {
-            @Override
-            public void connectComplete(boolean reconnect, String serverURI) {
-                toastMessageObserver.setValue("MQTT conn successful");
-                Log.w("mqtt", "connected");
-            }
 
-            @Override
-            public void connectionLost(Throwable cause) {
-                Log.w("mqtt", cause);
-//                toastMessageObserver.setValue(cause.getMessage());
-            }
 
-            @Override
-            public void messageArrived(String topic, MqttMessage message) throws Exception {
-                activityInterface.msgmqttpopup(topic, message);
-            }
 
-            @Override
-            public void deliveryComplete(IMqttDeliveryToken token) {
 
-            }
-        });
-        mqttHelper.connect();
-    }
-
-    public void disconmqtt() {
-        mqttHelper.mqttAndroidClient.disconnect();
-    }
-
-    public boolean subscribeToTopic(String topic) {
-        try {
-            mqttHelper.subscribeToTopic(topic);
-            List<String> listaux = topics.getValue();
-
-            if (listaux == null)
-                listaux = new ArrayList<String>();
-            if (listaux.contains(topic))
-                return false;
-
-            listaux.add(topic);
-            topics.setValue(listaux);
-            return true;
-        } catch (Exception e) {
-            toastMessageObserver.setValue(e.getMessage());
-            return false;
-        }
-    }
-
-    public boolean unsubscribeToTopic(String topic) {
-        try {
-            mqttHelper.unsubscribeToTopic(topic);
-            List<String> listaux = topics.getValue();
-            listaux.remove(topic);
-            topics.setValue(listaux);
-            return true;
-        } catch (Exception e) {
-            toastMessageObserver.setValue(e.getMessage());
-            return false;
-        }
-    }
-
-    public void publishMessage(WorkoutDTO workoutDTO, String topic) {
-        try {
-            byte[] encodedPayload;
-            String msg = (new Gson()).toJson(workoutDTO);
-            Log.w("mqtt", msg);
-            encodedPayload = msg.getBytes(StandardCharsets.UTF_8);
-            MqttMessage message = new MqttMessage(encodedPayload);
-            message.setQos(0);
-
-            mqttHelper.mqttAndroidClient.publish(topic, message);
-            // view set text to null
-        } catch (Throwable e) {
-            Log.w("mqtt", e.getMessage());
-        }
-    }
     /**************************************************************************************************************************/
 
     /**
