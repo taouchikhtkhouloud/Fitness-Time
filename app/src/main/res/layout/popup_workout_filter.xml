@@ -58,11 +58,13 @@
     <Button
         android:id="@+id/filterB"
         android:layout_width="120dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="Filter"
         android:textColorLink="#F13232"
+        app:iconTint="#7A1B1B"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pullCB" />
+        app:layout_constraintTop_toBottomOf="@+id/pullCB"
+        app:rippleColor="#8E1A1A" />
 </androidx.constraintlayout.widget.ConstraintLayout>

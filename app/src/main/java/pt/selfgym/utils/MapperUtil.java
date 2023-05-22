@@ -11,7 +11,7 @@ public class MapperUtil {
         if (MAPPER == null) {
             MAPPER = new ModelMapper();
             MAPPER.getConfiguration().setFieldMatchingEnabled(true).setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
-            // http://modelmapper.org/user-manual/configuration/
+
         }
         return MAPPER;
     }
