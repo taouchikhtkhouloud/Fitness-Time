@@ -2,7 +2,8 @@
 [![forthebadge](https://forthebadge.com/images/badges/made-with-java.svg)](https://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/built-for-android.svg)](https://forthebadge.com)
 
-![fitnesstime](https://github.com/taouchikhtkhouloud/Workout-App/assets/92301300/af075027-fc5e-41f0-827a-d24e52677526)
+
+![fitnesstime](https://github.com/taouchikhtkhouloud/Fitness-Time/assets/92301300/9ba7ca24-4e93-4312-a8c9-6b71f84a4a1c)
 
 
 This repository contains a simple and user-friendly Android mobile application designed to provide a seamless training experience. The app offers high portability and optimal mobility, allowing users to create, modify, and delete formations, exercises, and circuits related to their training routines. It also features a stopwatch during training sessions and provides a comprehensive history and statistics of previously completed training plans. The app incorporates training search filters to help users find specific exercises or formations quickly.
@@ -21,7 +22,7 @@ This repository contains a simple and user-friendly Android mobile application d
 1. Clone the repository to your local machine using the following command:
 
    ```bash
-   git clone https://github.com/your-username/your-repo.git
+   git clone https://github.com/taouchikhtkhouloud/Fitness-Time
    ```
 
 2. Open the project in Android Studio.
