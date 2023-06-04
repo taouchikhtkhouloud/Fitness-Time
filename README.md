@@ -22,7 +22,7 @@ This repository contains a simple and user-friendly Android mobile application d
 1. Clone the repository to your local machine using the following command:
 
    ```bash
-   git clone https://github.com/taouchikhtkhouloud/Fitness-Time
+   git clone https://github.com/taouchikhtkhouloud/Fitness-Time.git
    ```
 
 2. Open the project in Android Studio.
