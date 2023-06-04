@@ -41,7 +41,8 @@ _Example of a training circuit created using exercises._
 
 _Stopwatch in action during a training session._
 
-
+## Landing page 
+https://fitness--time.vercel.app/
 
 
 
